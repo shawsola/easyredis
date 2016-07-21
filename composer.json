@@ -1,0 +1,16 @@
+{
+    "name": "shawsolaya/easyredis",
+    "description": "redis client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sola Shaw",
+            "email": "sola@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {},
+    "psr-4": {
+        "Easy\\": "src/"
+    }
+}
