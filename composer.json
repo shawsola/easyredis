@@ -9,8 +9,10 @@
         }
     ],
     "minimum-stability": "alpha",
-    "require": {},
-    "psr-4": {
-        "Easy\\": "src/"
+    "autoload": {
+        "psr-4": {
+            "Easy\\": "src/"
+        }
     }
+
 }
