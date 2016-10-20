@@ -15,4 +15,6 @@ branches:
 matrix:
   fast_finish: true
 
-script: phpunit
+install: travis_retry composer install
+
+script: vendor/bin/phpunit --verbose
