@@ -54,6 +54,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('OK', $client->multi());
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
+        $client->exec();
 
         return $client;
     }
