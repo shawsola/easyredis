@@ -4,11 +4,12 @@ use Easy\Redis\Redis;
 
 class RedisClientTest extends \PHPUnit_Framework_TestCase
 {
-	public function testInstance()
+    public function testInstance()
     {
-        $client = new Redis;
+        $client = new Redis();
         $this->assertTrue(is_object($client));
         $this->assertTrue($client instanceof Redis);
+
         return $client;
     }
 
@@ -22,6 +23,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('value', $client->get('test:key'));
         $this->assertEquals('1', $client->del('test:key'));
         $this->assertEmpty($client->get('test:key'));
+
         return $client;
     }
 
@@ -38,6 +40,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1', $client->del('test:key'));
         $this->assertEquals('0', $client->scard('test:key'));
         $this->assertEmpty($client->smembers('test:key'));
+
         return $client;
     }
 
@@ -53,6 +56,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
         $this->assertEquals([['item1', 'item2'], ['item1', 'item2']], $client->exec());
+
         return $client;
     }
 
