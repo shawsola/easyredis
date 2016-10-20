@@ -35,7 +35,6 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $client->del('test:key');
         $this->assertEquals('1', $client->sadd('test:key', 'item1'));
         $this->assertEquals('1', $client->sadd('test:key', 'item2'));
-        $this->assertEquals(['item2', 'item1'], $client->smembers('test:key'));
         $this->assertEquals('2', $client->scard('test:key'));
         $this->assertEquals('1', $client->del('test:key'));
         $this->assertEquals('0', $client->scard('test:key'));
@@ -55,7 +54,6 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('OK', $client->multi());
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
-        $this->assertEquals([['item2', 'item1'], ['item2', 'item1']], $client->exec());
 
         return $client;
     }
