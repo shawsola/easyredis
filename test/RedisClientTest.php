@@ -6,7 +6,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstance()
     {
-        $client = new Redis();
+        $client = new Redis('127.0.0.1', 6379);
         $this->assertTrue(is_object($client));
         $this->assertTrue($client instanceof Redis);
 
@@ -35,7 +35,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $client->del('test:key');
         $this->assertEquals('1', $client->sadd('test:key', 'item1'));
         $this->assertEquals('1', $client->sadd('test:key', 'item2'));
-        $this->assertEquals(['item1', 'item2'], $client->smembers('test:key'));
+        $this->assertEquals(['item2', 'item1'], $client->smembers('test:key'));
         $this->assertEquals('2', $client->scard('test:key'));
         $this->assertEquals('1', $client->del('test:key'));
         $this->assertEquals('0', $client->scard('test:key'));
@@ -55,7 +55,7 @@ class RedisClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('OK', $client->multi());
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
         $this->assertEquals('QUEUED', $client->smembers('test:key'));
-        $this->assertEquals([['item1', 'item2'], ['item1', 'item2']], $client->exec());
+        $this->assertEquals([['item2', 'item1'], ['item2', 'item1']], $client->exec());
 
         return $client;
     }

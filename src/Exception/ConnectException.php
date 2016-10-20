@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the shawsola/easyredis.
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Easy\Exception;
 
-class ConnectException extends \Exception
+use Exception;
+
+class ConnectException extends Exception
 {
     public function __toString()
     {
-        return 'Connection Redis Error.';
+        return $this->getMessage();
     }
 }

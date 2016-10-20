@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the shawsola/easyredis.
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Easy\Redis;
 
 use Easy\Exception\ConnectException;
@@ -24,7 +31,7 @@ class Redis
         $this->timeout = $timeout;
     }
 
-    public function __destruct()
+    public function close()
     {
         if (!empty($this->instance)) {
             fclose($this->instance);
@@ -37,9 +44,9 @@ class Redis
         if (!empty($this->instance)) {
             return $this->instance;
         }
-        $this->instance = fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout);
+        $this->instance = pfsockopen($this->host, $this->port, $errno, $errstr, $this->timeout);
         if (!$this->instance) {
-            throw new ConnectException();
+            throw new ConnectException($errno.' - '.$errstr);
         }
 
         return $this->instance;
@@ -64,7 +71,7 @@ class Redis
         if ('-' === $type) {
             throw new ResponseException($result);
         } elseif ('$' === $type) {
-            if ($result == -1) {
+            if ($result === -1) {
                 $result = null;
             } else {
                 $line = fread(self::getInstance(), $result + 2);
@@ -72,7 +79,7 @@ class Redis
             }
         } elseif ('*' === $type) {
             $count = (int) $result;
-            for ($i = 0, $result = []; $i < $count; $i++) {
+            for ($i = 0, $result = []; $i < $count; ++$i) {
                 $result[] = $this->response();
             }
         }
