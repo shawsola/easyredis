@@ -30,6 +30,11 @@ class Redis
 
         $this->timeout = $timeout;
     }
+    
+    public function __destruct()
+    {
+        $this->close();
+    }
 
     public function close()
     {
